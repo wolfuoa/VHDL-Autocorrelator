@@ -45,9 +45,9 @@ architecture arch of cor_asp is
     signal registered_config_correlation_window : std_logic_vector(4 downto 0);
     signal registered_config_adc_wait           : std_logic_vector(3 downto 0);
 
-    signal count                                : integer := 0;
-    signal index_right                          : integer := 16;
-    signal index_left                           : integer := 15;
+    signal num_unaddressed                      : integer := 0;
+    signal index_right                          : integer := 0;
+    signal index_left                           : integer := 0;
 
 begin
 
@@ -123,15 +123,15 @@ begin
     config_adc_wait           <= recv_data(15 downto 12);
     config_correlation_window <= recv_data(11 downto 7);
 
-    -- Propagate data to registers if a new config message was received
-    process (clock)
-    begin
-        if (recv_data(31 downto 28) = address_constants.message_type_config) then
-            config_register_write_enable <= '1';
-        else
-            config_register_write_enable <= '0';
-        end if;
-    end process;
+    -- -- Propagate data to registers if a new config message was received
+    -- process (recv_data)
+    -- begin
+    --     if (recv_data(31 downto 28) = address_constants.message_type_config) then
+    --         config_register_write_enable <= '1';
+    --     else
+    --         config_register_write_enable <= '0';
+    --     end if;
+    -- end process;
 
     process (clock)
         variable correlation : signed(31 downto 0) := (others => '0');
@@ -141,33 +141,37 @@ begin
 
         variable signal_array : array_type := (others => (others => '0'));
     begin
-
         if config_reset = '1' then
             signal_array := (others => (others => '0'));
-            count <= 0;
+            num_unaddressed <= 0;
         elsif rising_edge(clock) then
-
-            send_data <= (others => '0');
-            send_addr <= (others => '0');
-
-            if registered_config_enable(0) = '1' then
+            send_data                    <= (others => '0');
+            send_addr                    <= (others => '0');
+            config_register_write_enable <= '0';
+            if (recv_data(31 downto 28) = address_constants.message_type_config) then
+                config_register_write_enable <= '1';
+                index_right                  <= (to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2;
+                index_left                   <= ((to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2) - 1;
+            elsif registered_config_enable(0) = '1' then
                 -- INCOMING DATA
                 if recv_data(31 downto 28) = address_constants.message_type_average then
-                    signal_array(count) := signed(recv_data(15 downto 0));
-                    count <= count + 1;
+                    shift : for i in 31 downto 1 loop
+                        signal_array(i) := signal_array(i - 1);
+                    end loop shift;
+                    signal_array(0) := signed(recv_data(15 downto 0));
+                    num_unaddressed <= num_unaddressed + 1;
                 else
-                    if count > 5 then
-                        if index_right < 31 then
+                    if num_unaddressed > to_integer(unsigned(registered_config_adc_wait)) then
+                        if index_right < registered_config_correlation_window - 1 then
                             correlation := correlation + signal_array(index_right) * signal_array(index_left);
                             index_right <= index_right + 1;
                             index_left  <= index_left - 1;
                         else
-                            send_data   <= address_constants.message_type_correlate & "000000000000" & std_logic_vector(resize(correlation, 16));
-                            send_addr   <= registered_config_address & "0000";
-
-                            index_right <= (to_integer(unsigned(registered_config_correlation_window)) + 1) / 2;
-                            index_left  <= ((to_integer(unsigned(registered_config_correlation_window)) + 1) / 2) - 1;
-                            count       <= 0;
+                            send_data       <= address_constants.message_type_correlate & "000000000000" & std_logic_vector(resize(correlation, 16));
+                            send_addr       <= registered_config_address & "0000";
+                            index_right     <= (to_integer(unsigned(registered_config_correlation_window)) + 1) / 2;
+                            index_left      <= ((to_integer(unsigned(registered_config_correlation_window)) + 1) / 2) - 1;
+                            num_unaddressed <= 0;
                             correlation := (others => '0');
                         end if;
                     else
