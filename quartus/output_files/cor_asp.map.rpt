@@ -1,0 +1,500 @@
+Analysis & Synthesis report for cor_asp
+Thu May 23 17:49:35 2024
+Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis DSP Block Usage Summary
+  9. Registers Removed During Synthesis
+ 10. Removed Registers Triggering Further Register Optimizations
+ 11. General Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for User Entity Instance: register_buffer:address_register
+ 14. Parameter Settings for User Entity Instance: register_buffer:bit_mode_register
+ 15. Parameter Settings for User Entity Instance: register_buffer:correlation_window_register
+ 16. Parameter Settings for User Entity Instance: register_buffer:enable_register
+ 17. Parameter Settings for User Entity Instance: register_buffer:adc_wait_register
+ 18. Port Connectivity Checks: "register_buffer:bit_mode_register"
+ 19. Post-Synthesis Netlist Statistics for Top Partition
+ 20. Elapsed Time Per Partition
+ 21. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+
+
+
++-----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                      ;
++---------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Thu May 23 17:49:34 2024           ;
+; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Standard Edition ;
+; Revision Name                   ; cor_asp                                         ;
+; Top-level Entity Name           ; cor_asp                                         ;
+; Family                          ; Cyclone V                                       ;
+; Logic utilization (in ALMs)     ; N/A                                             ;
+; Total registers                 ; 623                                             ;
+; Total pins                      ; 83                                              ;
+; Total virtual pins              ; 0                                               ;
+; Total block memory bits         ; 0                                               ;
+; Total DSP Blocks                ; 1                                               ;
+; Total HSSI RX PCSs              ; 0                                               ;
+; Total HSSI PMA RX Deserializers ; 0                                               ;
+; Total HSSI TX PCSs              ; 0                                               ;
+; Total HSSI PMA TX Serializers   ; 0                                               ;
+; Total PLLs                      ; 0                                               ;
+; Total DLLs                      ; 0                                               ;
++---------------------------------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                             ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CSEMA5F31C6       ;                    ;
+; Top-level entity name                                                           ; cor_asp            ; cor_asp            ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 24          ;
+; Maximum allowed            ; 16          ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 16          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
+;     Processor 5            ;   0.0%      ;
+;     Processor 6            ;   0.0%      ;
+;     Processor 7            ;   0.0%      ;
+;     Processor 8            ;   0.0%      ;
+;     Processors 9-16        ;   0.0%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                         ;
++----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                                  ; Library ;
++----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------+---------+
+; ../src/memory/register.vhd       ; yes             ; User VHDL File  ; H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd   ;         ;
+; ../src/processor/cor_asp.vhd     ; yes             ; User VHDL File  ; H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd ;         ;
++----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------+---------+
+
+
++-----------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary               ;
++---------------------------------------------+-------------+
+; Resource                                    ; Usage       ;
++---------------------------------------------+-------------+
+; Estimate of Logic utilization (ALMs needed) ; 494         ;
+;                                             ;             ;
+; Combinational ALUT usage for logic          ; 446         ;
+;     -- 7 input functions                    ; 1           ;
+;     -- 6 input functions                    ; 333         ;
+;     -- 5 input functions                    ; 21          ;
+;     -- 4 input functions                    ; 6           ;
+;     -- <=3 input functions                  ; 85          ;
+;                                             ;             ;
+; Dedicated logic registers                   ; 623         ;
+;                                             ;             ;
+; I/O pins                                    ; 83          ;
+;                                             ;             ;
+; Total DSP Blocks                            ; 1           ;
+;                                             ;             ;
+; Maximum fan-out node                        ; clock~input ;
+; Maximum fan-out                             ; 623         ;
+; Total fan-out                               ; 5016        ;
+; Average fan-out                             ; 4.06        ;
++---------------------------------------------+-------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                               ;
++--------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------+-----------------+--------------+
+; Compilation Hierarchy Node                       ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                  ; Entity Name     ; Library Name ;
++--------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------+-----------------+--------------+
+; |cor_asp                                         ; 446 (446)           ; 623 (609)                 ; 0                 ; 1          ; 83   ; 0            ; |cor_asp                                             ; cor_asp         ; work         ;
+;    |register_buffer:adc_wait_register|           ; 0 (0)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |cor_asp|register_buffer:adc_wait_register           ; register_buffer ; work         ;
+;    |register_buffer:address_register|            ; 0 (0)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |cor_asp|register_buffer:address_register            ; register_buffer ; work         ;
+;    |register_buffer:correlation_window_register| ; 0 (0)               ; 5 (5)                     ; 0                 ; 0          ; 0    ; 0            ; |cor_asp|register_buffer:correlation_window_register ; register_buffer ; work         ;
+;    |register_buffer:enable_register|             ; 0 (0)               ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |cor_asp|register_buffer:enable_register             ; register_buffer ; work         ;
++--------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------+-----------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++----------------------------------------------+
+; Analysis & Synthesis DSP Block Usage Summary ;
++-------------------------------+--------------+
+; Statistic                     ; Number Used  ;
++-------------------------------+--------------+
+; Independent 18x18 plus 36     ; 1            ;
+; Total number of DSP blocks    ; 1            ;
+;                               ;              ;
+; Fixed Point Signed Multiplier ; 1            ;
++-------------------------------+--------------+
+
+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; send_data[30]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[28]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[27]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[26]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[25]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[24]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[23]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[22]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[21]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[20]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[19]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[18]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[17]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_data[16]~reg0                     ; Stuck at GND due to stuck port data_in ;
+; send_addr[3]~reg0                      ; Stuck at GND due to stuck port data_in ;
+; send_addr[2]~reg0                      ; Stuck at GND due to stuck port data_in ;
+; send_addr[1]~reg0                      ; Stuck at GND due to stuck port data_in ;
+; send_addr[0]~reg0                      ; Stuck at GND due to stuck port data_in ;
+; index_right[5..31]                     ; Lost fanout                            ;
+; index_left[5..31]                      ; Lost fanout                            ;
+; Total Number of Removed Registers = 72 ;                                        ;
++----------------------------------------+----------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                 ;
++-----------------+--------------------+--------------------------------------------------------------------------------------+
+; Register name   ; Reason for Removal ; Registers Removed due to This Register                                               ;
++-----------------+--------------------+--------------------------------------------------------------------------------------+
+; index_right[31] ; Lost Fanouts       ; index_right[30], index_right[29], index_right[28], index_right[27], index_right[26], ;
+;                 ;                    ; index_right[25], index_right[24], index_right[23], index_right[22], index_right[21], ;
+;                 ;                    ; index_right[20], index_right[19], index_right[18], index_right[17], index_right[16], ;
+;                 ;                    ; index_right[15], index_right[14], index_right[13], index_right[12], index_right[11], ;
+;                 ;                    ; index_right[10], index_right[9], index_right[8], index_right[7], index_right[6],     ;
+;                 ;                    ; index_right[5]                                                                       ;
++-----------------+--------------------+--------------------------------------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 623   ;
+; Number of registers using Synchronous Clear  ; 84    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 558   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 623   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------+
+; 3:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |cor_asp|num_unaddressed[26] ;
+; 4:1                ; 37 bits   ; 74 LEs        ; 74 LEs               ; 0 LEs                  ; Yes        ; |cor_asp|index_left[11]      ;
+; 4:1                ; 27 bits   ; 54 LEs        ; 0 LEs                ; 54 LEs                 ; Yes        ; |cor_asp|index_right[15]     ;
+; 6:1                ; 20 bits   ; 80 LEs        ; 0 LEs                ; 80 LEs                 ; Yes        ; |cor_asp|send_data[7]~reg0   ;
+; 32:1               ; 16 bits   ; 336 LEs       ; 336 LEs              ; 0 LEs                  ; No         ; |cor_asp|Mux0                ;
+; 32:1               ; 16 bits   ; 336 LEs       ; 336 LEs              ; 0 LEs                  ; No         ; |cor_asp|Mux27               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------+
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register_buffer:address_register ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; width          ; 4     ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register_buffer:bit_mode_register ;
++----------------+-------+-------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                  ;
++----------------+-------+-------------------------------------------------------+
+; width          ; 2     ; Signed Integer                                        ;
++----------------+-------+-------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register_buffer:correlation_window_register ;
++----------------+-------+-----------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                            ;
++----------------+-------+-----------------------------------------------------------------+
+; width          ; 5     ; Signed Integer                                                  ;
++----------------+-------+-----------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register_buffer:enable_register ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; width          ; 1     ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register_buffer:adc_wait_register ;
++----------------+-------+-------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                  ;
++----------------+-------+-------------------------------------------------------+
+; width          ; 4     ; Signed Integer                                        ;
++----------------+-------+-------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register_buffer:bit_mode_register"                                                      ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; data_out ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 623                         ;
+;     ENA               ; 13                          ;
+;     ENA CLR           ; 526                         ;
+;     ENA CLR SCLR      ; 32                          ;
+;     ENA SCLR          ; 52                          ;
+; arriav_lcell_comb     ; 447                         ;
+;     arith             ; 42                          ;
+;         1 data inputs ; 42                          ;
+;     extend            ; 1                           ;
+;         7 data inputs ; 1                           ;
+;     normal            ; 404                         ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 2                           ;
+;         2 data inputs ; 4                           ;
+;         3 data inputs ; 37                          ;
+;         4 data inputs ; 6                           ;
+;         5 data inputs ; 21                          ;
+;         6 data inputs ; 333                         ;
+; arriav_mac            ; 1                           ;
+; boundary_port         ; 83                          ;
+;                       ;                             ;
+; Max LUT depth         ; 4.10                        ;
+; Average LUT depth     ; 2.75                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:01     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition
+    Info: Processing started: Thu May 23 17:49:24 2024
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off 701-COR-ASP -c cor_asp
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file /documents/github/701-cor-asp/vhdl-autocorrelator/src/memory/register.vhd
+    Info (12022): Found design unit 1: register_buffer-arch File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd Line: 19
+    Info (12023): Found entity 1: register_buffer File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /documents/github/701-cor-asp/vhdl-autocorrelator/src/processor/cor_asp.vhd
+    Info (12022): Found design unit 1: cor_asp-arch File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 29
+    Info (12023): Found entity 1: cor_asp File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 11
+Info (12021): Found 1 design units, including 0 entities, in source file /documents/github/701-cor-asp/vhdl-autocorrelator/src/util/address_constants.vhd
+    Info (12022): Found design unit 1: address_constants File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/util/address_constants.vhd Line: 4
+Info (12127): Elaborating entity "cor_asp" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at cor_asp.vhd(44): object "registered_config_bit_mode" assigned a value but never read File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 44
+Warning (10492): VHDL Process Statement warning at cor_asp.vhd(144): signal "config_reset" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+Info (12128): Elaborating entity "register_buffer" for hierarchy "register_buffer:address_register" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 55
+Warning (10492): VHDL Process Statement warning at register.vhd(27): signal "reset" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd Line: 27
+Info (12128): Elaborating entity "register_buffer" for hierarchy "register_buffer:bit_mode_register" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 67
+Warning (10492): VHDL Process Statement warning at register.vhd(27): signal "reset" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd Line: 27
+Info (12128): Elaborating entity "register_buffer" for hierarchy "register_buffer:correlation_window_register" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 79
+Warning (10492): VHDL Process Statement warning at register.vhd(27): signal "reset" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd Line: 27
+Info (12128): Elaborating entity "register_buffer" for hierarchy "register_buffer:enable_register" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 91
+Warning (10492): VHDL Process Statement warning at register.vhd(27): signal "reset" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/memory/register.vhd Line: 27
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "send_data[16]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[17]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[18]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[19]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[20]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[21]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[22]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[23]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[24]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[25]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[26]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[27]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[28]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_data[30]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_addr[0]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_addr[1]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_addr[2]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+    Warning (13410): Pin "send_addr[3]" is stuck at GND File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 144
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 54 registers lost all their fanouts during netlist optimizations.
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 16 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "global_reset" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 14
+    Warning (15610): No output dependent on input pin "global_enable" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 15
+    Warning (15610): No output dependent on input pin "recv_data[18]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 22
+    Warning (15610): No output dependent on input pin "recv_data[19]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 22
+    Warning (15610): No output dependent on input pin "recv_data[20]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 22
+    Warning (15610): No output dependent on input pin "recv_data[21]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 22
+    Warning (15610): No output dependent on input pin "recv_data[22]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 22
+    Warning (15610): No output dependent on input pin "recv_data[23]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 22
+    Warning (15610): No output dependent on input pin "recv_addr[0]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[1]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[2]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[3]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[4]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[5]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[6]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+    Warning (15610): No output dependent on input pin "recv_addr[7]" File: H:/Documents/GitHub/701-COR-ASP/VHDL-Autocorrelator/src/processor/cor_asp.vhd Line: 23
+Info (21057): Implemented 1109 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 43 input pins
+    Info (21059): Implemented 40 output pins
+    Info (21061): Implemented 1025 logic cells
+    Info (21062): Implemented 1 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 43 warnings
+    Info: Peak virtual memory: 4961 megabytes
+    Info: Processing ended: Thu May 23 17:49:35 2024
+    Info: Elapsed time: 00:00:11
+    Info: Total CPU time (on all processors): 00:00:03
+
+

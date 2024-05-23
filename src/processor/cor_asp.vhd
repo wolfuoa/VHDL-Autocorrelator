@@ -5,8 +5,8 @@ use ieee.std_logic_1164.all;
 
 use work.address_constants;
 
-library work;
-use work.TdmaMinTypes.all;
+-- library work;
+-- use work.TdmaMinTypes.all;
 
 entity cor_asp is
     port (
@@ -152,6 +152,7 @@ begin
                 config_register_write_enable <= '1';
                 index_right                  <= (to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2;
                 index_left                   <= ((to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2) - 1;
+                correlation := (others => '0');
             elsif registered_config_enable(0) = '1' then
                 -- INCOMING DATA
                 if recv_data(31 downto 28) = address_constants.message_type_average then

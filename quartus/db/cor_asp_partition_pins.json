@@ -1,0 +1,205 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "send_data[0]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[1]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[2]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[3]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[4]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[5]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[6]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[7]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[8]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[9]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[10]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[11]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[12]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[13]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[14]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[15]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[29]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data[31]",
+					"strict" : false
+				},
+				{
+					"name" : "send_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "send_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "send_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "send_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "clock",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[29]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[30]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[31]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[16]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[28]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[17]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[15]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[14]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[13]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[12]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[11]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[10]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[9]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[7]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[8]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[24]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[25]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[26]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[27]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[0]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[1]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[2]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[3]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[4]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[5]",
+					"strict" : false
+				},
+				{
+					"name" : "recv_data[6]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
