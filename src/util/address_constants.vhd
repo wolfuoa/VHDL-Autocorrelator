@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-package common_network_addresses is
+package address_constants is
 
     constant message_type_config      : std_logic_vector := "1000";
     constant message_type_average     : std_logic_vector := "1001";

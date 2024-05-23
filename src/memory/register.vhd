@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity register is
+entity register_buffer is
     generic (
         width : integer range 0 to 32
     );
@@ -14,9 +14,9 @@ entity register is
         data_in      : in  std_logic_vector(width - 1 downto 0);
         data_out     : out std_logic_vector(width - 1 downto 0)
     );
-end register;
+end register_buffer;
 
-architecture arch of register is
+architecture arch of register_buffer is
 
     signal next_data : std_logic_vector(width - 1 downto 0) := (others => '0');
 

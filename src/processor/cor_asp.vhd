@@ -1,6 +1,6 @@
 library ieee;
 use ieee.numeric_std.all;
-use ieee.std_logic_signed.all
+use ieee.std_logic_signed.all;
 use ieee.std_logic_1164.all;
 
 use work.address_constants;
@@ -8,81 +8,108 @@ use work.address_constants;
 library work;
 use work.TdmaMinTypes.all;
 
-entity COR_ASP is
+entity cor_asp is
     port (
         clock         : in  std_logic;
         global_reset  : in  std_logic;
         global_enable : in  std_logic;
 
-        recv_data     : in  tdma_min_data;
-        recv_addr     : in  tdma_min_addr;
-        send_data     : out tdma_min_data;
-        send_addr     : out tdma_min_addr
-    );
-end COR_ASP;
+        -- recv_data     : in  tdma_min_data;
+        -- recv_addr     : in  tdma_min_addr;
+        -- send_data     : out tdma_min_data;
+        -- send_addr     : out tdma_min_addr
 
-architecture arch of COR_ASP is
+        recv_data     : in  std_logic_vector(31 downto 0);
+        recv_addr     : in  std_logic_vector(7 downto 0);
+        send_data     : out std_logic_vector(31 downto 0);
+        send_addr     : out std_logic_vector(7 downto 0)
+    );
+end cor_asp;
+
+architecture arch of cor_asp is
 
     signal config_register_write_enable         : std_logic;
     signal config_reset                         : std_logic;
 
     -- NOC -> COR CONFIG REGS
-    signal config_enable                        : std_logic;
-    signal config_address                       : std_logic;
+    signal config_enable                        : std_logic_vector(0 downto 0);
+    signal config_address                       : std_logic_vector(3 downto 0);
     signal config_bit_mode                      : std_logic_vector(1 downto 0);
     signal config_correlation_window            : std_logic_vector(4 downto 0);
     signal config_adc_wait                      : std_logic_vector(3 downto 0);
 
     -- COR CONFIG REGS -> COR
-    signal registered_config_enable             : std_logic;
-    signal registered_config_address            : std_logic;
+    signal registered_config_enable             : std_logic_vector(0 downto 0);
+    signal registered_config_address            : std_logic_vector(3 downto 0);
     signal registered_config_bit_mode           : std_logic_vector(1 downto 0);
     signal registered_config_correlation_window : std_logic_vector(4 downto 0);
     signal registered_config_adc_wait           : std_logic_vector(3 downto 0);
 
     signal count                                : integer := 0;
+    signal index_right                          : integer := 16;
+    signal index_left                           : integer := 15;
 
 begin
 
     -- COR CONFIG REGS
-    address_register : entity work.register port map (
-        clock        => clock,
-        reset        => config_reset,
-        write_enable => config_register_write_enable,
-        data_in      => config_address,
-        data_out     => registered_config_address
+    address_register : entity work.register_buffer
+        generic map(
+            width => 4
+        )
+        port map(
+            clock        => clock,
+            reset        => config_reset,
+            write_enable => config_register_write_enable,
+            data_in      => config_address,
+            data_out     => registered_config_address
         );
 
-    bit_mode_register : entity work.register port map (
-        clock        => clock,
-        reset        => config_reset,
-        write_enable => config_register_write_enable,
-        data_in      => config_bit_mode,
-        data_out     => registered_config_bit_mode
+    bit_mode_register : entity work.register_buffer
+        generic map(
+            width => 2
+        )
+        port map(
+            clock        => clock,
+            reset        => config_reset,
+            write_enable => config_register_write_enable,
+            data_in      => config_bit_mode,
+            data_out     => registered_config_bit_mode
         );
 
-    correlation_window_register : entity work.register port map (
-        clock        => clock,
-        reset        => config_reset,
-        write_enable => config_register_write_enable,
-        data_in      => config_correlation_window,
-        data_out     => registered_config_correlation_window
+    correlation_window_register : entity work.register_buffer
+        generic map(
+            width => 5
+        )
+        port map(
+            clock        => clock,
+            reset        => config_reset,
+            write_enable => config_register_write_enable,
+            data_in      => config_correlation_window,
+            data_out     => registered_config_correlation_window
         );
 
-    enable_register : entity work.register port map (
-        clock        => clock,
-        reset        => config_reset,
-        write_enable => config_register_write_enable,
-        data_in      => config_enable,
-        data_out     => registered_config_enable
+    enable_register : entity work.register_buffer
+        generic map(
+            width => 1
+        )
+        port map(
+            clock        => clock,
+            reset        => config_reset,
+            write_enable => config_register_write_enable,
+            data_in      => config_enable,
+            data_out     => registered_config_enable
         );
 
-    enable_register : entity work.register port map (
-        clock        => clock,
-        reset        => config_reset,
-        write_enable => config_register_write_enable,
-        data_in      => config_adc_wait,
-        data_out     => registered_config_adc_wait
+    adc_wait_register : entity work.register_buffer
+        generic map(
+            width => 4
+        )
+        port map(
+            clock        => clock,
+            reset        => config_reset,
+            write_enable => config_register_write_enable,
+            data_in      => config_adc_wait,
+            data_out     => registered_config_adc_wait
         );
 
     -- [31  ..  28] [27 .. 24] [23 .. 20] [19  ..  18] [ 17 ] [  16  ] [15  ..  12] [11    ..    7]
@@ -91,7 +118,7 @@ begin
     -- Wire config packets
     config_address            <= recv_data(27 downto 24);
     config_bit_mode           <= recv_data(19 downto 18);
-    config_enable             <= recv_data(17);
+    config_enable(0)          <= recv_data(17);
     config_reset              <= recv_data(16);
     config_adc_wait           <= recv_data(15 downto 12);
     config_correlation_window <= recv_data(11 downto 7);
@@ -99,7 +126,7 @@ begin
     -- Propagate data to registers if a new config message was received
     process (recv_data)
     begin
-        if (recv_data(31 downto 0) = message_type_config) then
+        if (recv_data(31 downto 28) = address_constants.message_type_config) then
             config_register_write_enable <= '1';
         else
             config_register_write_enable <= '0';
@@ -110,44 +137,40 @@ begin
         variable data        : signed(15 downto 0) := (others => '0');
         variable data_result : signed(15 downto 0) := (others => '0');
         variable correlation : signed(31 downto 0) := (others => '0');
-        variable index       : integer             := 0;
 
         type array_type is
         array(0 to 31) of signed(15 downto 0);
 
-        variable signal_array : array_type;
-        variable shift_array  : array_type;
+        variable signal_array : array_type := (others => (others => '0'));
     begin
 
-        send_data <= (others => '0');
-        send_addr <= (others => '0');
-
-        if registered_config_reset = '1' then
-            signal_array <= (others => (others => '0'));
-            shift_array  <= (others => (others => '0'));
-            count        <= 0;
+        if config_reset = '1' then
+            signal_array := (others => (others => '0'));
+            count <= 0;
         elsif rising_edge(clock) then
-            if registered_config_enable = '1' then
+
+            send_data <= (others => '0');
+            send_addr <= (others => '0');
+
+            if registered_config_enable(0) = '1' then
                 -- INCOMING DATA
-                if recv_data(31 downto 28) = message_type_average then
-                    data_array(count + 9) := recv_data(15 downto 0);
-                    shift_array(count)    := recv_data(15 downto 0);
+                if recv_data(31 downto 28) = address_constants.message_type_average then
+                    signal_array(count) := signed(recv_data(15 downto 0));
+                    count <= count + 1;
                 else
-                    if count > 10 then
-                        if index < 31 then
-                            correlation := correlation + data_array(index) * shift_array(index);
-                            index       := index + 1;
+                    if count > 5 then
+                        if index_right < 31 then
+                            correlation := correlation + signal_array(index_right) * signal_array(index_left);
+                            send_data   <= x"0000" & std_logic_vector(signal_array(index_left)(31 downto 16));
+                            index_right <= index_right + 1;
+                            index_left  <= index_left - 1;
                         else
-                            -- Fruit Loops
-                            shit : for i in 31 downto 1 loop
-                                shift_array(i) := shift_array(i - 1);
-                            end loop shit;
-                            shift_array(0) := (others => '0');
+                            send_data   <= address_constants.message_type_correlate & "000000000000" & std_logic_vector(correlation(31 downto 16));
+                            send_addr   <= registered_config_address & "0000";
 
-                            send_data <= message_type_correlate & "000000000000" & resize(correlation, 16);
-                            send_addr <= registered_config_address;
-
-                            index       := 1;
+                            index_right <= 16;
+                            index_left  <= 15;
+                            count       <= 0;
                             correlation := (others => '0');
                         end if;
                     else
