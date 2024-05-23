@@ -163,7 +163,7 @@ begin
                     num_unaddressed <= num_unaddressed + 1;
                 else
                     if num_unaddressed > to_integer(unsigned(registered_config_adc_wait)) then
-                        if index_right < registered_config_correlation_window - 1 then
+                        if index_right < registered_config_correlation_window then
                             correlation := correlation + signal_array(index_right) * signal_array(index_left);
                             index_right <= index_right + 1;
                             index_left  <= index_left - 1;

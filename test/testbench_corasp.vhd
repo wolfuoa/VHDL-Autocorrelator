@@ -107,7 +107,7 @@ begin
         wait for 40 ns;
         t_recv_data <= "0000" & "000000000000" & x"0000";
         wait for 40 ns;
-        t_recv_data <= address_constants.message_type_config & "0000" & "0000" & "00" & '1' & '0' & "0101" & "01111" & "0000000";
+        t_recv_data <= address_constants.message_type_config & "0000" & "0000" & "00" & '1' & '0' & "0101" & "00110" & "0000000";
         wait for 40 ns;
         t_recv_data <= address_constants.message_type_average & "000000000000" & const_test_val;
         wait for 40 ns;
