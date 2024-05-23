@@ -124,7 +124,7 @@ begin
     config_correlation_window <= recv_data(11 downto 7);
 
     -- Propagate data to registers if a new config message was received
-    process (recv_data)
+    process (clock)
     begin
         if (recv_data(31 downto 28) = address_constants.message_type_config) then
             config_register_write_enable <= '1';
@@ -134,8 +134,6 @@ begin
     end process;
 
     process (clock)
-        variable data        : signed(15 downto 0) := (others => '0');
-        variable data_result : signed(15 downto 0) := (others => '0');
         variable correlation : signed(31 downto 0) := (others => '0');
 
         type array_type is
@@ -161,15 +159,14 @@ begin
                     if count > 5 then
                         if index_right < 31 then
                             correlation := correlation + signal_array(index_right) * signal_array(index_left);
-                            send_data   <= x"0000" & std_logic_vector(signal_array(index_left)(31 downto 16));
                             index_right <= index_right + 1;
                             index_left  <= index_left - 1;
                         else
-                            send_data   <= address_constants.message_type_correlate & "000000000000" & std_logic_vector(correlation(31 downto 16));
+                            send_data   <= address_constants.message_type_correlate & "000000000000" & std_logic_vector(resize(correlation, 16));
                             send_addr   <= registered_config_address & "0000";
 
-                            index_right <= 16;
-                            index_left  <= 15;
+                            index_right <= (to_integer(unsigned(registered_config_correlation_window)) + 1) / 2;
+                            index_left  <= ((to_integer(unsigned(registered_config_correlation_window)) + 1) / 2) - 1;
                             count       <= 0;
                             correlation := (others => '0');
                         end if;
