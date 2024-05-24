@@ -141,10 +141,7 @@ begin
 
         variable signal_array : array_type := (others => (others => '0'));
     begin
-        if config_reset = '1' then
-            signal_array := (others => (others => '0'));
-            num_unaddressed <= 0;
-        elsif rising_edge(clock) then
+        if rising_edge(clock) then
             send_data                    <= (others => '0');
             send_addr                    <= (others => '0');
             config_register_write_enable <= '0';
@@ -153,6 +150,10 @@ begin
                 index_right                  <= (to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2;
                 index_left                   <= ((to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2) - 1;
                 correlation := (others => '0');
+                if config_reset = '1' then
+                    signal_array := (others => (others => '0'));
+                    num_unaddressed <= 0;
+                end if;
             elsif registered_config_enable(0) = '1' then
                 -- INCOMING DATA
                 if recv_data(31 downto 28) = address_constants.message_type_average then

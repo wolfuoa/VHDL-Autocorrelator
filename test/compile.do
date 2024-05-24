@@ -37,7 +37,7 @@ foreach {library file_list} $library_file_list {
 
 puts {
   *************************************************************************************************
-  All files successfully compiled. You may now run the .do scripts that are prefixed with 'run_test' 
+  All files successfully compiled.
   *************************************************************************************************
 
   Q: wHaT iS rEc0P?????
