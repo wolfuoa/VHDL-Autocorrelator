@@ -116,22 +116,15 @@ begin
     -- [ msg type ] [  addr  ] [  dest  ] [ bit mode ] [ en ] [ rset ] [ adc wait ] [ corr window ]
 
     -- Wire config packets
-    config_address            <= recv_data(27 downto 24);
-    config_bit_mode           <= recv_data(19 downto 18);
-    config_enable(0)          <= recv_data(17);
-    config_reset              <= recv_data(16);
-    config_adc_wait           <= recv_data(15 downto 12);
-    config_correlation_window <= recv_data(11 downto 7);
+    config_address               <= recv_data(27 downto 24);
+    config_bit_mode              <= recv_data(19 downto 18);
+    config_enable(0)             <= recv_data(17);
+    config_reset                 <= recv_data(16);
+    config_adc_wait              <= recv_data(15 downto 12);
+    config_correlation_window    <= recv_data(11 downto 7);
 
-    -- -- Propagate data to registers if a new config message was received
-    -- process (recv_data)
-    -- begin
-    --     if (recv_data(31 downto 28) = address_constants.message_type_config) then
-    --         config_register_write_enable <= '1';
-    --     else
-    --         config_register_write_enable <= '0';
-    --     end if;
-    -- end process;
+    config_register_write_enable <= '1' when recv_data(31 downto 28) = address_constants.message_type_config else
+                                    '0';
 
     process (clock)
         variable correlation : signed(31 downto 0) := (others => '0');
@@ -142,13 +135,11 @@ begin
         variable signal_array : array_type := (others => (others => '0'));
     begin
         if rising_edge(clock) then
-            send_data                    <= (others => '0');
-            send_addr                    <= (others => '0');
-            config_register_write_enable <= '0';
+            send_data <= (others => '0');
+            send_addr <= (others => '0');
             if (recv_data(31 downto 28) = address_constants.message_type_config) then
-                config_register_write_enable <= '1';
-                index_right                  <= (to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2;
-                index_left                   <= ((to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2) - 1;
+                index_right <= (to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2;
+                index_left  <= ((to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2) - 1;
                 correlation := (others => '0');
                 if config_reset = '1' then
                     signal_array := (others => (others => '0'));
