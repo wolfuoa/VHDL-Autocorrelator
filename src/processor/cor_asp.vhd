@@ -37,6 +37,7 @@ architecture arch of cor_asp is
     signal config_bit_mode                      : std_logic_vector(1 downto 0);
     signal config_correlation_window            : std_logic_vector(4 downto 0);
     signal config_adc_wait                      : std_logic_vector(3 downto 0);
+    signal config_passthru                      : std_logic;
 
     -- COR CONFIG REGS -> COR
     signal registered_config_enable             : std_logic_vector(0 downto 0);
@@ -44,12 +45,13 @@ architecture arch of cor_asp is
     signal registered_config_bit_mode           : std_logic_vector(1 downto 0);
     signal registered_config_correlation_window : std_logic_vector(4 downto 0);
     signal registered_config_adc_wait           : std_logic_vector(3 downto 0);
+    signal registered_config_passthru           : std_logic;
 
     signal num_unaddressed                      : integer := 0;
     signal index_right                          : integer := 0;
     signal index_left                           : integer := 0;
 
-    signal correlation_test                     : std_logic_vector(31 downto 0);
+    signal correlation_test                     : signed(31 downto 0);
 
 begin
 
@@ -114,8 +116,20 @@ begin
             data_out     => registered_config_adc_wait
         );
 
-    -- [31  ..  28] [27 .. 24] [23 .. 20] [19  ..  18] [ 17 ] [  16  ] [15  ..  12] [11    ..    7]
-    -- [ msg type ] [  addr  ] [  dest  ] [ bit mode ] [ en ] [ rset ] [ adc wait ] [ corr window ]
+    passthru_register : entity work.register_buffer
+        generic map(
+            width => 1
+        )
+        port map(
+            clock        => clock,
+            reset        => config_reset,
+            write_enable => config_register_write_enable,
+            data_in(0)   => config_passthru,
+            data_out(0)  => registered_config_passthru
+        );
+
+    -- [31  ..  28] [27 .. 24] [23 .. 20] [19  ..  18] [ 17 ] [  16  ] [15  ..  12] [11    ..    7] [      6      ]
+    -- [ msg type ] [  addr  ] [  dest  ] [ bit mode ] [ en ] [ rset ] [ adc wait ] [ corr window ] [ passthrough ]
 
     -- Wire config packets
     config_address               <= recv_data(27 downto 24);
@@ -124,6 +138,7 @@ begin
     config_reset                 <= recv_data(16);
     config_adc_wait              <= recv_data(15 downto 12);
     config_correlation_window    <= recv_data(11 downto 7);
+    config_passthru              <= recv_data(6);
 
     config_register_write_enable <= '1' when recv_data(31 downto 28) = address_constants.message_type_config else
                                     '0';
@@ -150,11 +165,16 @@ begin
             elsif registered_config_enable(0) = '1' then
                 -- INCOMING DATA
                 if recv_data(31 downto 28) = address_constants.message_type_average then
-                    shift : for i in 31 downto 1 loop
-                        signal_array(i) := signal_array(i - 1);
-                    end loop shift;
-                    signal_array(0) := signed(recv_data(15 downto 0));
-                    num_unaddressed <= num_unaddressed + 1;
+                    if registered_config_passthru = '1' then
+                        send_data <= address_constants.message_type_correlate & "000000000000" & recv_data(15 downto 0);
+                        send_addr <= "0000" & registered_config_address;
+                    else
+                        shift : for i in 31 downto 1 loop
+                            signal_array(i) := signal_array(i - 1);
+                        end loop shift;
+                        signal_array(0) := signed(recv_data(15 downto 0));
+                        num_unaddressed <= num_unaddressed + 1;
+                    end if;
                 else
                     if num_unaddressed > to_integer(unsigned(registered_config_adc_wait)) then
                         if index_right < registered_config_correlation_window then
