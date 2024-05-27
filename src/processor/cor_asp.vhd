@@ -160,7 +160,7 @@ begin
                             index_right <= index_right + 1;
                             index_left  <= index_left - 1;
                         else
-                            send_data       <= address_constants.message_type_correlate & "000000000000" & std_logic_vector(resize(correlation, 16));
+                            send_data       <= address_constants.message_type_correlate & "00000000" & std_logic_vector(resize(correlation, 20));
                             send_addr       <= "0000" & registered_config_address;
                             index_right     <= (to_integer(unsigned(registered_config_correlation_window)) + 1) / 2;
                             index_left      <= ((to_integer(unsigned(registered_config_correlation_window)) + 1) / 2) - 1;
