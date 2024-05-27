@@ -49,6 +49,8 @@ architecture arch of cor_asp is
     signal index_right                          : integer := 0;
     signal index_left                           : integer := 0;
 
+    signal correlation_test                     : std_logic_vector(31 downto 0);
+
 begin
 
     -- COR CONFIG REGS
@@ -173,6 +175,8 @@ begin
             else
             end if;
         end if;
+
+        correlation_test <= correlation;
 
     end process;
 
