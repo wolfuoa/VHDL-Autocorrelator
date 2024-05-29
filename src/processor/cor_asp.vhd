@@ -51,7 +51,7 @@ architecture arch of cor_asp is
     signal index_right                          : integer := 0;
     signal index_left                           : integer := 0;
 
-    signal correlation_test                     : signed(31 downto 0);
+    signal correlation                          : signed(31 downto 0);
 
 begin
 
@@ -144,7 +144,6 @@ begin
                                     '0';
 
     process (clock)
-        variable correlation : signed(31 downto 0) := (others => '0');
 
         type array_type is
         array(0 to 31) of signed(15 downto 0);
@@ -157,7 +156,7 @@ begin
             if (recv_data(31 downto 28) = address_constants.message_type_config) then
                 index_right <= (to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2;
                 index_left  <= ((to_integer(unsigned(recv_data(11 downto 7))) + 1) / 2) - 1;
-                correlation := (others => '0');
+                correlation <= (others => '0');
                 if config_reset = '1' then
                     signal_array := (others => (others => '0'));
                     num_unaddressed <= 0;
@@ -178,16 +177,16 @@ begin
                 else
                     if num_unaddressed > to_integer(unsigned(registered_config_adc_wait)) then
                         if index_right < registered_config_correlation_window then
-                            correlation := correlation + signal_array(index_right) * signal_array(index_left);
+                            correlation <= correlation + signal_array(index_right) * signal_array(index_left);
                             index_right <= index_right + 1;
                             index_left  <= index_left - 1;
                         else
-                            send_data       <= address_constants.message_type_correlate & "00000000" & std_logic_vector(resize(correlation, 20));
+                            send_data       <= address_constants.message_type_correlate & std_logic_vector(resize(correlation, 28));
                             send_addr       <= "0000" & registered_config_address;
                             index_right     <= (to_integer(unsigned(registered_config_correlation_window)) + 1) / 2;
                             index_left      <= ((to_integer(unsigned(registered_config_correlation_window)) + 1) / 2) - 1;
                             num_unaddressed <= 0;
-                            correlation := (others => '0');
+                            correlation     <= (others => '0');
                         end if;
                     else
                     end if;
@@ -195,9 +194,6 @@ begin
             else
             end if;
         end if;
-
-        correlation_test <= correlation;
-
     end process;
 
 end architecture; -- arch
