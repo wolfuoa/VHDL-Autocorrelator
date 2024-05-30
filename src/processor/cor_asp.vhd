@@ -163,9 +163,9 @@ begin
                 end if;
             elsif registered_config_enable(0) = '1' then
                 -- INCOMING DATA
-                if recv_data(31 downto 28) = address_constants.message_type_average then
+                if recv_data(31 downto 28) = address_constants.message_type_signal then
                     if registered_config_passthru = '1' then
-                        send_data <= address_constants.message_type_correlate & "000000000000" & recv_data(15 downto 0);
+                        send_data <= address_constants.message_type_signal & "000000000000" & recv_data(15 downto 0);
                         send_addr <= "0000" & registered_config_address;
                     else
                         shift : for i in 31 downto 1 loop
