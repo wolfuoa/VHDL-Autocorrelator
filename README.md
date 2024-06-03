@@ -31,5 +31,8 @@ This will compile all required files in the correct order and populate your work
 
 - `testbench_corasp` testbench the Autocorrelation ASP.
 
+> [!IMPORTANT]
+> For more comprehensive overview of Autocorrelator, refer to the HMPSoC testbenches in the G4 submission, where CORE-ASP is integrated with the rest of the components.
+
 > [!NOTE]
 > All scripts have the intended configuration automated, feel free to tinker with the waves and runtime
